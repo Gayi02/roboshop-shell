@@ -29,5 +29,26 @@ else
    echo "you are a root user"
 fi
 
-cp mongodb.repo /etc/yum.repos.d/mongodb.repo
+cp mongodb.repo /etc/yum.repos.d/mongodb.repo &>> $LOGFILE
+
 VALIDATE $?
+
+dnf install mongodb-org -y  &>> $LOGFILE
+
+VALIDATE $? "Installing mongoDB"
+
+systemctl enable mongod  &>> $LOGFILE
+
+VALIDATE $? "Enableling mongoDB"
+
+systemctl start mongod  &>> $LOGFILE
+
+VALIDATE $? "Starting mongoDB"
+
+sed -i '127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> $LOGFILE
+
+VALIDATE $? "Remote access to mongoDB"
+
+systemctl restart mongod &>> $LOGFILE
+
+VALIDATE $? "Restarting mongoDB"
