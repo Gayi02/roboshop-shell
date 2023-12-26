@@ -29,7 +29,7 @@ else
    echo "you are a root user"
 fi
 
-cp mongodb.repo /etc/yum.repos.d/mongodb.repo &>> $LOGFILE
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
 VALIDATE $?
 
