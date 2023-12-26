@@ -14,8 +14,7 @@ echo "script started executing at $TIMESTAMP" &>> $LOGFILE
 VALIDATE(){
     if [ $? -ne 0 ]
     then
-       echo -e "Error: $2... $R failed $N"
-       exit 1
+       echo -e "$2... $R failed $N"
     else
        echo -e "$2... $G success $N"
     fi   
@@ -31,7 +30,7 @@ fi
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
-VALIDATE $?
+VALIDATE $? "Copied MongoDB Repo"
 
 dnf install mongodb-org -y  &>> $LOGFILE
 
@@ -45,7 +44,7 @@ systemctl start mongod  &>> $LOGFILE
 
 VALIDATE $? "Starting mongoDB"
 
-sed -i '127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> $LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> $LOGFILE
 
 VALIDATE $? "Remote access to mongoDB"
 
