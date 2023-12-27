@@ -1,7 +1,6 @@
 #!/bin/bash
 
 ID=$(id -u)
-
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -65,13 +64,11 @@ unzip -o /tmp/catalogue.zip &>> $LOGFILE
 
 VALIDATE $? "Unzipping catalogue"
 
-cd /app
-
 npm install &>> $LOGFILE
 
-VALIDATE $? "Downloding dependencies"
+VALIDATE $? "/Installing dependencies"
 
-cp home/centos/roboshop-shell/catalogue.services /etc/systemd/system/catalogue.service &>> $LOGFILE
+cp /home/centos/roboshop-shell/catalogue.services /etc/systemd/system/catalogue.service &>> $LOGFILE
 
 VALIDATE $? "copying catalogue service files"
 
@@ -87,7 +84,7 @@ systemctl start catalogue &>> $LOGFILE
 
 VALIDATE $? "Start Catalogue"
 
-cp home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
 VALIDATE $? "Copying mongoDB repo"
 
